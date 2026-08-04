@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Cookie;
 
 class AuthController extends Controller
 {
@@ -47,14 +48,25 @@ class AuthController extends Controller
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials, $request->boolean('remember'))) {
+        $remember = $request->boolean('remember');
+
+        if (Auth::attempt($credentials, $remember)) {
+
             $request->session()->regenerate();
 
-            // Admins land in the admin panel; everyone else goes to their dashboard.
+            // Store email in cookie if Remember Me is checked
+            if ($remember) {
+                Cookie::queue('remember_email', $request->email, 60 * 24 * 30); // 30 days
+            } else {
+                Cookie::queue(Cookie::forget('remember_email'));
+            }
+
+            // Redirect Admin
             if (Auth::user()->isAdmin()) {
                 return redirect()->intended(route('admin.courses.index'));
             }
 
+            // Redirect User
             return redirect()->intended(route('dashboard'));
         }
 
@@ -66,6 +78,7 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         Auth::logout();
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

@@ -29,17 +29,42 @@
                     <img src="{{ $course->thumbnail }}" alt="{{ $course->title }}" class="w-full h-full object-cover">
                 </div>
                 <div class="p-5">
-                    <span class="text-xs font-medium text-brand-400">{{ $course->category->name }}</span>
-                    <h3 class="text-white font-semibold mt-1 mb-3">{{ $course->title }}</h3>
-                    <div class="flex items-center justify-between">
-                        <span class="text-white font-bold">${{ number_format($course->displayPrice(), 2) }}</span>
-                        <form method="POST" action="{{ route('teacher.courses.destroy', $course) }}" onsubmit="return confirm('Delete this course?');">
-                            @csrf
-                            @method('DELETE')
-                            <button class="text-xs font-semibold text-red-400 hover:text-red-300">Delete</button>
-                        </form>
-                    </div>
-                </div>
+
+    <div class="flex items-center justify-between mb-2">
+        <span class="text-xs font-medium text-brand-400">
+            {{ $course->category->name }}
+        </span>
+
+        @if($course->is_active)
+            <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-500/20 text-green-400">
+                Active
+            </span>
+        @else
+            <span class="px-2 py-1 text-xs font-semibold rounded-full bg-red-500/20 text-red-400">
+                Inactive
+            </span>
+        @endif
+    </div>
+
+    <h3 class="text-white font-semibold mb-3">
+        {{ $course->title }}
+    </h3>
+
+    <div class="flex items-center justify-between">
+        <span class="text-white font-bold">
+            ${{ number_format($course->displayPrice(), 2) }}
+        </span>
+
+        <form method="POST" action="{{ route('teacher.courses.destroy', $course) }}" onsubmit="return confirm('Delete this course?');">
+            @csrf
+            @method('DELETE')
+            <button class="text-xs font-semibold text-red-400 hover:text-red-300">
+                Delete
+            </button>
+        </form>
+    </div>
+
+</div>
             </div>
         @empty
             <div class="col-span-full text-center py-16">

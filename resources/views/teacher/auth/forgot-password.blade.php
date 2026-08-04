@@ -5,9 +5,9 @@
 @section('content')
 <section class="max-w-md mx-auto px-4 py-20">
     <div class="text-center mb-8">
-        <span class="inline-block px-3 py-1 rounded-full bg-brand-600/20 text-brand-400 text-xs font-semibold mb-4">
+        <!-- <span class="inline-block px-3 py-1 rounded-full bg-brand-600/20 text-brand-400 text-xs font-semibold mb-4">
             Teacher Panel
-        </span>
+        </span> -->
         <h1 class="text-2xl font-extrabold text-white mb-1">Reset your password</h1>
         <p class="text-gray-500 text-sm">Enter your email and we'll send you a reset link.</p>
     </div>

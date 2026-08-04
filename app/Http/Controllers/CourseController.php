@@ -35,16 +35,26 @@ class CourseController extends Controller
     }
 
     public function show(Course $course)
-    {   
-     abort_unless($course->is_active, 404);
-        $course->load('category');
-        $related = Course::where('category_id', $course->category_id)
-            ->where('id', '!=', $course->id)
-            ->take(4)
-            ->get();
-
-        $isEnrolled = $course->isEnrolledBy(auth()->user());
-
-        return view('courses.show', compact('course', 'related', 'isEnrolled'));
+{
+    // Sirf student ke liye inactive course hide karo
+    if (
+        !$course->is_active &&
+        (!auth()->check() || auth()->user()->role != 'teacher')
+    ) {
+        abort(404);
     }
+
+    $course->load('category');
+
+    $related = Course::where('category_id', $course->category_id)
+        ->where('id', '!=', $course->id)
+        ->take(4)
+        ->get();
+
+    $isEnrolled = auth()->check()
+        ? $course->isEnrolledBy(auth()->user())
+        : false;
+
+    return view('courses.show', compact('course', 'related', 'isEnrolled'));
+}
 }

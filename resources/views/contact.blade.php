@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Contact Us — EduSphere')
+@section('title', 'Contact Us — GrowSkill')
 
 @section('content')
 
