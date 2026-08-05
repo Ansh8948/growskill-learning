@@ -6,7 +6,7 @@
 <section class="max-w-md mx-auto px-4 py-20">
     <div class="text-center mb-8">
         <span class="inline-block px-3 py-1 rounded-full bg-brand-600/20 text-brand-400 text-xs font-semibold mb-4">
-            Teacher Panel
+            Teacher ->
         </span>
         <h1 class="text-2xl font-extrabold text-white mb-1">Teacher Sign In</h1>
     </div>
@@ -44,7 +44,7 @@
         </button>
 <a href="{{ route('teacher.password.request') }}"
    class="mt-2 flex justify-end inline-block text-xs font-semibold text-brand-400 hover:text-brand-300">
-    Forgot password?
+    Reset password?
 </a>
     </form>
 

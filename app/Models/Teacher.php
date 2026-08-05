@@ -10,7 +10,8 @@ class Teacher extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $fillable = ['name', 'email', 'password', 'bio'];
+    protected $fillable = ['name', 'email', 'password', 'bio','otp',
+    'otp_expires_at', 'otp_expires_at' => 'datetime',];
 
     protected $hidden = ['password', 'remember_token'];
 

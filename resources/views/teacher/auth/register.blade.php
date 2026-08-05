@@ -1,4 +1,4 @@
-@extends('layouts.teacher')
+<!-- @extends('layouts.teacher') -->
 
 @section('title', 'Become a Teacher — GrowSkill')
 

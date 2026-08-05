@@ -8,8 +8,12 @@
     <section class="relative overflow-hidden border-b border-white/5">
         <div class="absolute inset-0 bg-gradient-to-br from-brand-600/10 via-transparent to-fuchsia-600/10"></div>
         <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
-            <span class="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-gray-400 mb-6">
-                About GrowSkill
+            
+         
+        <span class="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-gray-400 mb-6">
+            <a href="{{ route('about') }}" class="hover:text-gray-300 transition">
+               About GrowSkill
+           </a>
             </span>
             <h1 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
                 One platform, <span class="bg-gradient-to-r from-brand-400 to-fuchsia-400 bg-clip-text text-transparent">six skill tracks</span>

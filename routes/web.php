@@ -17,7 +17,10 @@ use App\Http\Controllers\Admin\CourseController as AdminCourseController;
 
 use App\Http\Controllers\Teacher\AuthController as TeacherAuthController;
 use App\Http\Controllers\Teacher\CourseController as TeacherCourseController;
-use App\Http\Controllers\Teacher\ForgotPasswordController;
+// use App\Http\Controllers\Teacher\ForgotPasswordController;
+use App\Http\Controllers\Teacher\TeacherForgotPasswordController;
+
+
 
 
 /*
@@ -129,6 +132,7 @@ Route::middleware(['auth', 'admin'])
     });
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Teacher Routes
@@ -137,43 +141,51 @@ Route::middleware(['auth', 'admin'])
 
 Route::prefix('teacher')->name('teacher.')->group(function () {
 
-    // Register/Login
+    // Authentication
     Route::get('/register', [TeacherAuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [TeacherAuthController::class, 'register']);
 
     Route::get('/login', [TeacherAuthController::class, 'showLogin'])->name('login');
-    Route::post('/login', [TeacherAuthController::class, 'login']);
+     Route::post('/login', [TeacherAuthController::class, 'login']);
 
-    // Forgot Password
-    Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])
+    // Forgot Password (OTP)
+    Route::get('/forgot-password', [TeacherForgotPasswordController::class, 'showLinkRequestForm'])
         ->name('password.request');
 
-    Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])
+    Route::post('/forgot-password', [TeacherForgotPasswordController::class, 'sendResetLinkEmail'])
         ->name('password.email');
 
-    Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'showResetForm'])
-        ->name('password.reset');
+    Route::get('/verify-otp', [TeacherForgotPasswordController::class, 'showOtpForm'])
+        ->name('password.otp.form');
 
-    Route::post('/reset-password', [ForgotPasswordController::class, 'reset'])
+    Route::post('/verify-otp', [TeacherForgotPasswordController::class, 'verifyOtp'])
+        ->name('password.otp.verify');
+
+    Route::get('/reset-password', [TeacherForgotPasswordController::class, 'showResetForm'])
+        ->name('password.reset.form');
+
+    Route::post('/reset-password', [TeacherForgotPasswordController::class, 'reset'])
         ->name('password.update');
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | Teacher Auth Routes
-    |--------------------------------------------------------------------------
-    */
-
+    // Protected Routes
     Route::middleware('teacher.auth')->group(function () {
 
-        Route::post('/logout', [TeacherAuthController::class, 'logout'])->name('logout');
+        Route::post('/logout', [TeacherAuthController::class, 'logout'])
+            ->name('logout');
 
-        Route::get('/courses', [TeacherCourseController::class, 'index'])->name('courses.index');
+        Route::get('/courses', [TeacherCourseController::class, 'index'])
+            ->name('courses.index');
 
-        Route::get('/courses/create', [TeacherCourseController::class, 'create'])->name('courses.create');
+        Route::get('/courses/create', [TeacherCourseController::class, 'create'])
+            ->name('courses.create');
 
-        Route::post('/courses', [TeacherCourseController::class, 'store'])->name('courses.store');
+        Route::post('/courses', [TeacherCourseController::class, 'store'])
+            ->name('courses.store');
 
-        Route::delete('/courses/{course}', [TeacherCourseController::class, 'destroy'])->name('courses.destroy');
+        Route::delete('/courses/{course}', [TeacherCourseController::class, 'destroy'])
+            ->name('courses.destroy');
+
+     
     });
+
 });

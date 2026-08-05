@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
+use App\Http\Controllers\Teacher\Mail;
+use App\Mail\TeacherWelcomeMail;
 
 class AuthController extends Controller
 {
@@ -31,6 +33,11 @@ class AuthController extends Controller
             'bio' => $validated['bio'] ?? null,
             'password' => Hash::make($validated['password']),
         ]);
+        try {
+            Mail::to($teacher->email)->send(new TeacherWelcomeMail($teacher));
+          } catch (\Exception $e) {
+             \Log::error($e->getMessage());
+          }
 
         Auth::guard('teacher')->login($teacher);
 

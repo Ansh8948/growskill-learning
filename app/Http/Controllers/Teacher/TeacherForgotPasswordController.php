@@ -1,42 +1,50 @@
 <?php
 
 namespace App\Http\Controllers\Teacher;
-
 use App\Http\Controllers\Controller;
-use App\Mail\ForgetotpMail;
+use App\Mail\TeacherForgetotpMail;
 use App\Models\Teacher;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
-class ForgotPasswordController extends Controller
+class TeacherForgotPasswordController extends Controller
 {
     public function showLinkRequestForm()
     {
         return view('teacher.auth.forgot-password');
     }
-
     public function sendResetLinkEmail(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email|exists:teachers,email',
+{
+    $request->validate([
+        'email' => 'required|email|exists:teachers,email',
+    ]);
+
+    $teacher = Teacher::where('email', $request->email)->first();
+
+    if (!$teacher) {
+        return back()->withErrors([
+            'email' => 'Teacher not found.',
         ]);
-
-        $teacher = Teacher::where('email', $request->email)->first();
-
-        $otp = random_int(1000, 9999);
-
-        $teacher->update([
-            'otp' => $otp,
-            'otp_expires_at' => Carbon::now()->addMinutes(5),
-        ]);
-
-Mail::to($teacher->email)->send(new TeacherForgetotpMail($otp));
-        return redirect()->route('teacher.password.otp.form', [
-            'email' => $teacher->email,
-        ])->with('success', 'OTP sent successfully.');
     }
+
+    $otp = rand(1000, 9999);
+
+    
+    $teacher->update([
+        'otp' => $otp,
+        'otp_expires_at' => now()->addMinutes(5),
+    ]);
+
+
+    Mail::to($teacher->email)->send(new TeacherForgetotpMail($otp));
+
+    
+    return redirect()->route('teacher.password.otp.form', [
+        'email' => $teacher->email,
+    ])->with('success', 'OTP sent successfully.');
+}
 
     public function showOtpForm(Request $request)
     {

@@ -88,8 +88,8 @@
                             <button class="text-sm font-semibold px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-white transition border border-white/10">Logout</button>
                         </form>
                     @else
-                        <a href="{{ route('login') }}" class="text-sm font-medium text-gray-300 hover:text-white transition">Log in</a>
-                        <a href="{{ route('register') }}" class="text-sm font-semibold px-4 py-2 rounded-lg bg-brand-600 hover:bg-brand-500 text-white transition shadow-lg shadow-brand-600/20">Get Started</a>
+                        <a href="{{ route('teacher.login') }}" class="text-sm font-medium text-gray-300 hover:text-white transition">Log in</a>
+                        <a href="{{ route('teacher.register') }}" class="text-sm font-semibold px-4 py-2 rounded-lg bg-brand-600 hover:bg-brand-500 text-white transition shadow-lg shadow-brand-600/20">Register</a>
                     @endif
                 </div>
 
@@ -127,8 +127,8 @@
                         <button class="w-full text-left px-3 py-2.5 rounded-lg bg-white/5 text-white">Logout</button>
                     </form>
                 @else
-                    <a href="{{ route('login') }}" class="block px-3 py-2.5 rounded-lg text-gray-300 hover:bg-white/5 hover:text-white">Log in</a>
-                    <a href="{{ route('register') }}" class="block px-3 py-2.5 rounded-lg bg-brand-600 text-white text-center font-semibold">Get Started</a>
+                    <a href="{{ route('teacher.login') }}" class="block px-3 py-2.5 rounded-lg text-gray-300 hover:bg-white/5 hover:text-white">Log in-></a>
+                    <a href="{{ route('teacher.register') }}" class="block px-3 py-2.5 rounded-lg bg-brand-600 text-white text-center font-semibold">teacher->Started</a>
                 @endif
             </div>
         </div>
