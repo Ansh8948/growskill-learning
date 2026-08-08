@@ -145,6 +145,10 @@ Route::prefix('teacher')->name('teacher.')->group(function () {
     Route::get('/register', [TeacherAuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [TeacherAuthController::class, 'register']);
 
+    Route::get('/courses/teacherhome', [TeacherAuthController::class, 'teacherhome'])->name('teacherhome');
+    
+    // Route::post('/register', [TeacherAuthController::class, 'register']);
+
     Route::get('/login', [TeacherAuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [TeacherAuthController::class, 'login']);
 

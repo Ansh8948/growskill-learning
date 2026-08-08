@@ -8,6 +8,7 @@ use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class CourseController extends Controller
 {
@@ -40,7 +41,24 @@ class CourseController extends Controller
             'discount_price' => ['nullable', 'numeric', 'min:0', 'lt:price'],
             'level' => ['required', 'in:beginner,intermediate,advanced'],
             'duration_hours' => ['required', 'integer', 'min:1'],
+            'video' => ['required', 'file', 'mimes:mp4,webm,mov', 'max:512000'],
+            
+
+            
+            
+            
+        
+
         ]);
+        if ($request->hasFile('thumbnail')) {
+    $validated['thumbnail'] = $request
+        ->file('thumbnail')
+        ->store('courses/thumbnails', 'public');
+}
+
+$validated['video'] = $request
+    ->file('video')
+    ->store('courses/videos', 'public');
 
         $teacher = Auth::guard('teacher')->user();
 

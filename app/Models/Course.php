@@ -23,6 +23,7 @@ class Course extends Model
     'duration_hours',
     'is_featured',
     'is_active',
+     'video',
     ];
 
     public function teacher()

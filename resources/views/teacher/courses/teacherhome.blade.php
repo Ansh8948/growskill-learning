@@ -46,28 +46,7 @@
                 Category
             </label>
 
-            <select
-                name="category_id"
-                required
-                class="w-full rounded-xl bg-surface-800 border border-white/10 px-4 py-3 text-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-500"
-            >
-
-                <option value="">
-                    Select a category
-                </option>
-
-                @foreach($categories as $category)
-
-                    <option
-                        value="{{ $category->id }}"
-                        @selected(old('category_id') == $category->id)
-                    >
-                        {{ $category->name }}
-                    </option>
-
-                @endforeach
-
-            </select>
+        
         </div>
 
 

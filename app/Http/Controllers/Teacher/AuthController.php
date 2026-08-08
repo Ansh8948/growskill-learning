@@ -19,6 +19,11 @@ class AuthController extends Controller
         return view('teacher.auth.register');
     }
 
+    public function teacherhome()
+    {
+     
+    return view('teacher.courses.teacherhome');    }
+
     public function register(Request $request)
     {
         $validated = $request->validate([

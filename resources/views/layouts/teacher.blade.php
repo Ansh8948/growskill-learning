@@ -53,8 +53,8 @@
                 </a>
 
                 <div class="hidden md:flex items-center gap-8 text-sm font-medium">
-                    <a href="{{ route('home') }}" class="text-gray-300 hover:text-white transition {{ request()->routeIs('home') ? 'text-white' : '' }}">Home</a>
-                    <a href="{{ route('courses.index') }}" class="text-gray-300 hover:text-white transition {{ request()->routeIs('courses.*') ? 'text-white' : '' }}">Courses</a>
+                    <a href="{{ route('teacher.teacherhome') }}" class="text-gray-300 hover:text-white transition {{ request()->routeIs('home') ? 'text-white' : '' }}">Home</a>
+                    <!-- <a href="{{ route('courses.index') }}" class="text-gray-300 hover:text-white transition {{ request()->routeIs('courses.*') ? 'text-white' : '' }}">Courses</a> -->
                     <div class="relative" x-data="{ catOpen: false }" @mouseleave="catOpen = false">
                         <button @mouseenter="catOpen = true" @click="catOpen = !catOpen" class="text-gray-300 hover:text-white transition flex items-center gap-1">
                             Categories
