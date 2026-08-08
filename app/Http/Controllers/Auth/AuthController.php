@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UserWelcomeMail;
+
+
+
+
 
 class AuthController extends Controller
 {
@@ -30,6 +36,7 @@ class AuthController extends Controller
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
         ]);
+        Mail::to($user->email)->send(new UserWelcomeMail($user));
 
         Auth::login($user);
 
@@ -42,38 +49,48 @@ class AuthController extends Controller
     }
 
     public function login(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+{
+    $credentials = $request->validate([
+        'email' => ['required', 'email'],
+        'password' => ['required'],
+    ]);
 
-        $remember = $request->boolean('remember');
+    $remember = $request->boolean('remember');
 
-        if (Auth::attempt($credentials, $remember)) {
+    if (Auth::attempt($credentials, $remember)) {
 
-            $request->session()->regenerate();
+        $request->session()->regenerate();
 
-            // Store email in cookie if Remember Me is checked
-            if ($remember) {
-                Cookie::queue('remember_email', $request->email, 60 * 24 * 30); // 30 days
-            } else {
-                Cookie::queue(Cookie::forget('remember_email'));
-            }
+        // Get logged-in user
+        $user = Auth::user();
 
-            // Redirect Admin
-            if (Auth::user()->isAdmin()) {
-                return redirect()->intended(route('admin.courses.index'));
-            }
+        // Send welcome email after successful login
+        Mail::to($user->email)->send(new UserWelcomeMail($user));
 
-            // Redirect User
-            return redirect()->intended(route('dashboard'));
+        // Store email in cookie if Remember Me is checked
+        if ($remember) {
+            Cookie::queue(
+                'remember_email',
+                $request->email,
+                60 * 24 * 30
+            );
+        } else {
+            Cookie::queue(Cookie::forget('remember_email'));
         }
 
-        return back()->withErrors([
-            'email' => 'Those credentials do not match our records.',
-        ])->onlyInput('email');
+        // Redirect Admin
+        if ($user->isAdmin()) {
+            return redirect()->intended(route('admin.courses.index'));
+        }
+
+        // Redirect User
+        return redirect()->intended(route('dashboard'));
     }
+
+    return back()->withErrors([
+        'email' => 'Those credentials do not match our records.',
+    ])->onlyInput('email');
+}
 
     public function logout(Request $request)
     {

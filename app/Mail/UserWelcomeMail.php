@@ -2,25 +2,25 @@
 
 namespace App\Mail;
 
-use App\Models\Teacher;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class TeacherWelcomeMail extends Mailable
+class UserWelcomeMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $teacher;
+    public $user;
 
-    public function __construct(Teacher $teacher)
+    public function __construct(User $user)
     {
-        $this->teacher = $teacher;
+        $this->user = $user;
     }
 
     public function build()
     {
-        return $this->subject('Welcome to GrowSkill Teacher Panel')
-                    ->view('emails.teacher-welcome');
+        return $this->subject('Welcome to GrowSkill')
+                    ->view('emails.userwelcome');
     }
 }

@@ -6,9 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
-use App\Http\Controllers\Teacher\Mail;
+// use App\Http\Controllers\Teacher\Mail;
 use App\Mail\TeacherWelcomeMail;
 
 class AuthController extends Controller

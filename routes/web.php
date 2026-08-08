@@ -146,7 +146,7 @@ Route::prefix('teacher')->name('teacher.')->group(function () {
     Route::post('/register', [TeacherAuthController::class, 'register']);
 
     Route::get('/login', [TeacherAuthController::class, 'showLogin'])->name('login');
-     Route::post('/login', [TeacherAuthController::class, 'login']);
+    Route::post('/login', [TeacherAuthController::class, 'login']);
 
     // Forgot Password (OTP)
     Route::get('/forgot-password', [TeacherForgotPasswordController::class, 'showLinkRequestForm'])
