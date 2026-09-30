@@ -128,7 +128,7 @@ Route::middleware(['auth', 'admin'])
         Route::patch('/courses/{course}/toggle-status', [AdminCourseController::class, 'toggleStatus'])
             ->name('courses.toggle-status');
 
-        // Route::delete('/courses/{course}', [AdminCourseController::class, 'destroy'])->name('courses.destroy');
+         Route::delete('/courses/{course}', [AdminCourseController::class, 'destroy'])->name('courses.destroy');
     });
 
 
